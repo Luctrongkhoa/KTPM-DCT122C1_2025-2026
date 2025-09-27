@@ -1,0 +1,26 @@
+@startuml UC_Delivery
+left to right direction
+actor Customer as Buyer
+actor Driver as DeliveryDriver
+actor Admin as SysAdmin
+
+package "Delivery" {
+  usecase "Choose Delivery at Checkout" as UC_ChooseDelivery
+  usecase "Enter/Select Address" as UC_Address
+  usecase "Assign Driver" as UC_AssignDriver
+  usecase "Track Delivery Status" as UC_Track
+  usecase "Confirm Delivery" as UC_ConfirmDel
+  usecase "Handle Delivery Failure" as UC_DelFail
+}
+
+Buyer --> UC_ChooseDelivery
+Buyer --> UC_Address
+Driver --> UC_Track
+Driver --> UC_ConfirmDel
+
+SysAdmin --> UC_AssignDriver
+SysAdmin --> UC_DelFail
+
+UC_AssignDriver .> UC_Track : <<include>>
+UC_ConfirmDel .> UC_Track : <<include>>
+@enduml

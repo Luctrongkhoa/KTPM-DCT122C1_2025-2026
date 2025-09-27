@@ -1,0 +1,12 @@
+@startuml UC_Rating
+left to right direction
+actor Customer as Buyer
+
+package "Rating" {
+  usecase "Rate Product (1-5)" as UC_Rate
+  usecase "View Product Ratings" as UC_ViewRating
+}
+
+Buyer --> UC_Rate
+Buyer --> UC_ViewRating
+@enduml
