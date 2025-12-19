@@ -1,0 +1,53 @@
+@startuml
+' Sơ đồ lớp cho Module Quản lý Mượn sách
+
+class LoanController {
+  - loanService: LoanService
+  + createLoanTicket(request): Response
+  + returnBook(ticketId, bookId): Response
+}
+
+class LoanService {
+  - loanRepository: LoanRepository
+  + createLoan(readerId, bookIds): LoanTicket
+  + processReturn(ticketId, bookId): void
+  + checkOverdueLoans(): List<LoanTicket>
+}
+
+interface LoanRepository {
+  + save(loanTicket): LoanTicket
+  + findById(id): LoanTicket
+  + findOverdue(): List<LoanTicket>
+}
+
+class LoanTicket {
+  - ticketId: String
+  - reader: Reader
+  - loanDate: Date
+  - dueDate: Date
+  - loanDetails: List<LoanDetail>
+}
+
+class LoanDetail {
+  - book: Book
+  - returnDate: Date
+}
+
+class Book {
+ - bookId: String
+ - title: String
+}
+
+class Reader {
+ - readerId: String
+ - name: String
+}
+
+LoanController --> LoanService
+LoanService --> LoanRepository
+LoanService ..> LoanTicket
+LoanTicket "1" -- "1.." LoanDetail
+LoanDetail "1" -- "1" Book
+LoanTicket "1" -- "1" Reader
+
+@enduml

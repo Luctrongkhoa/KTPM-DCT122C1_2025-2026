@@ -1,0 +1,24 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(nguoi_doc, "Người đọc")
+
+Container(api_app, "API Application", "Java/Node.js", "Chứa logic nghiệp vụ chính của hệ thống.")
+
+Container_Boundary(c1, "Web Application") {
+    Component(search_module, "Search Module", "JavaScript", "Cung cấp giao diện và logic tìm kiếm sách.")
+    Component(loan_module, "Loan Module", "JavaScript", "Xử lý các thao tác mượn, trả, gia hạn sách.")
+    Component(account_module, "Account Management Module", "JavaScript", "Cho phép người dùng xem lịch sử, quản lý thông tin cá nhân.")
+}
+
+Rel(nguoi_doc, search_module, "Sử dụng để tìm sách")
+Rel(nguoi_doc, loan_module, "Sử dụng để mượn/trả sách")
+Rel(nguoi_doc, account_module, "Sử dụng để quản lý tài khoản")
+
+Rel(search_module, api_app, "Gọi API tìm kiếm")
+Rel(loan_module, api_app, "Gọi API mượn/trả")
+Rel(account_module, api_app, "Gọi API tài khoản")
+
+@enduml

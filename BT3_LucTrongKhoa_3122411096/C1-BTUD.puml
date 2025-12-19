@@ -1,0 +1,18 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(nguoi_doc, "Người đọc", "Người tìm kiếm và mượn sách.")
+Person(thu_thu, "Thủ thư/Admin", "Người quản lý kho sách và các yêu cầu.")
+
+System(thu_vien_online, "Hệ thống Thư viện trực tuyến", "Cho phép mượn/trả sách, quản lý kho sách online.")
+
+System_Ext(he_thong_thanh_toan, "Hệ thống thanh toán", "Hệ thống bên ngoài để xử lý phí thành viên, phí trễ hạn.")
+
+Rel(nguoi_doc, thu_vien_online, "Tìm kiếm, mượn, gia hạn, xem lịch sử")
+Rel(thu_thu, thu_vien_online, "Quản lý kho sách, xử lý yêu cầu mượn/trả")
+Rel(thu_vien_online, he_thong_thanh_toan, "Yêu cầu xử lý phí", "API Request")
+Rel(he_thong_thanh_toan, thu_vien_online, "Xác nhận kết quả thanh toán", "Webhook")
+
+@enduml

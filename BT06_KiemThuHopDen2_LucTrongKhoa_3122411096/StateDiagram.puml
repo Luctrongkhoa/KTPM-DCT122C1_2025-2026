@@ -1,0 +1,12 @@
+@startuml
+[*] --> Empty
+Empty --> NonEmpty : AddItem
+NonEmpty --> NonEmpty : AddItem
+NonEmpty --> NonEmpty : RemoveItem (still >0)
+NonEmpty --> Empty : RemoveItem (becomes 0)
+NonEmpty --> Reviewing : GoToReview
+Reviewing --> Checkout : ConfirmOK
+Reviewing --> NonEmpty : NotOK_EditCart
+Checkout --> OrderPlaced : PaymentSuccess
+Checkout --> NonEmpty : Cancel
+@enduml

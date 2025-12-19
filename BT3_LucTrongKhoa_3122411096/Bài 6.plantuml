@@ -1,0 +1,52 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(api_boundary, "API Backend") {
+    Component(api_entry, "API Entry Point", ".NET Core API", "Nhận request, xác thực, chuyển tiếp tới module.")
+
+    System_Boundary(modules, "Các Module nghiệp vụ") {
+        Component(users, "Users & Access", ".NET Library", "Quản lý đăng ký, đăng nhập, phân quyền.")
+        Component(catalog, "Product Catalog", ".NET Library", "Quản lý danh mục, món ăn.")
+        Component(cart, "Shopping Cart", ".NET Library", "Quản lý giỏ hàng.")
+        Component(ordering, "Order & Payment", ".NET Library", "Xử lý checkout, thanh toán, quản lý đơn hàng.")
+        Component(inventory, "Inventory", ".NET Library", "Quản lý tồn kho.")
+        Component(reservation, "Reservation", ".NET Library", "Quản lý đặt bàn.")
+        Component(rating, "Rating / Review", ".NET Library", "Quản lý đánh giá sản phẩm.")
+        Component(delivery, "Delivery", ".NET Library", "Quản lý và theo dõi giao hàng.")
+    }
+
+    ComponentDb(events_bus, "Events Bus", "In-memory", "Cơ chế Pub/Sub cho giao tiếp liên-module.")
+
+    Rel(api_entry, users, "Uses")
+    Rel(api_entry, catalog, "Uses")
+    Rel(api_entry, cart, "Uses")
+    Rel(api_entry, ordering, "Uses")
+    Rel(api_entry, inventory, "Uses")
+    Rel(api_entry, reservation, "Uses")
+    Rel(api_entry, rating, "Uses")
+    Rel(api_entry, delivery, "Uses")
+
+    Rel_Back(users, events_bus, "Publishes/Subscribes")
+    Rel_Back(catalog, events_bus, "Publishes/Subscribes")
+    Rel_Back(cart, events_bus, "Publishes/Subscribes")
+    Rel_Back(ordering, events_bus, "Publishes/Subscribes")
+    Rel_Back(inventory, events_bus, "Publishes/Subscribes")
+    Rel_Back(reservation, events_bus, "Publishes/Subscribes")
+    Rel_Back(rating, events_bus, "Publishes/Subscribes")
+    Rel_Back(delivery, events_bus, "Publishes/Subscribes")
+}
+
+ContainerDb(db, "Database", "SQL Server/PostgreSQL", "Lưu trữ dữ liệu với các schema riêng cho từng module.")
+
+Rel(users, db, "Reads/Writes to User Schema")
+Rel(catalog, db, "Reads/Writes to Product Schema")
+Rel(cart, db, "Reads/Writes to Cart Schema")
+Rel(ordering, db, "Reads/Writes to Order Schema")
+Rel(inventory, db, "Reads/Writes to Inventory Schema")
+Rel(reservation, db, "Reads/Writes to Reservation Schema")
+Rel(rating, db, "Reads/Writes to Rating Schema")
+Rel(delivery, db, "Reads/Writes to Delivery Schema")
+
+@enduml

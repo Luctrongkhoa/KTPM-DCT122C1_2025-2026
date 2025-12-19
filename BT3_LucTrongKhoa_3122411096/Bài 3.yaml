@@ -1,0 +1,183 @@
+openapi: 3.0.3
+info:
+  title: Coolstore services
+  description: |-
+    coolstore-microservices project - Website
+    Send email to coolstore-microservices project
+  version: '1.0' 
+servers:
+  - url: http
+    description: HTTP
+
+tags:
+  - name: CartService
+  - name: CatalogService
+  - name: InventoryService
+  - name: RatingService
+
+paths:
+  /cart/api/carts:
+    post:
+      tags:
+        - CartService
+      responses:
+        '200':
+          description: Successful operation
+    put:
+      tags:
+        - CartService
+      responses:
+        '200':
+          description: Successful operation
+
+  /cart/api/carts/{cart_id}:
+    get:
+      tags:
+        - CartService
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+
+  /cart/api/carts/{cart_id}/checkout:
+    put:
+      tags:
+        - CartService
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+
+  /cart/api/carts/{cart_id}/items/{product_id}:
+    delete:
+      tags:
+        - CartService
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+
+  /catalog/api/products:
+    post:
+      tags:
+        - CatalogService
+      responses:
+        '200':
+          description: Successful operation
+
+  /catalog/api/products/{current_page}/{high_price}:
+    get:
+      tags:
+        - CatalogService
+      parameters:
+        - name: current_page
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: high_price
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+
+  /catalog/api/products/{product_id}:
+    get:
+      tags:
+        - CatalogService
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+
+  /inventory/api/availabilities:
+    get:
+      tags:
+        - InventoryService
+      responses:
+        '200':
+          description: Successful operation
+
+  /inventory/api/availabilities/{id}:
+    get:
+      tags:
+        - InventoryService
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+
+  /inventory/api/inventory/migrate:
+    post:
+      tags:
+        - InventoryService
+      responses:
+        '200':
+          description: Successful operation
+
+  /rating/api/ratings:
+    get:
+      tags:
+        - RatingService
+      responses:
+        '200':
+          description: Successful operation
+    post:
+      tags:
+        - RatingService
+      responses:
+        '200':
+          description: Successful operation
+    put:
+      tags:
+        - RatingService
+      responses:
+        '200':
+          description: Successful operation
+
+  /rating/api/ratings/{product_id}:
+    get:
+      tags:
+        - RatingService
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation

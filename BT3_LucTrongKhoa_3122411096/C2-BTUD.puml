@@ -1,0 +1,28 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(nguoi_doc, "Người đọc")
+Person(thu_thu, "Thủ thư/Admin")
+
+System_Ext(payment_service, "Payment Service", "Hệ thống thanh toán bên ngoài (VD: Momo, VNPay)")
+
+System_Boundary(c1, "Hệ thống Thư viện trực tuyến") {
+    Container(web_app, "Web Application", "React/VueJS", "Cung cấp giao diện web cho người dùng và thủ thư.")
+    Container(mobile_app, "Mobile Application", "React Native/Flutter", "Cung cấp các chức năng trên thiết bị di động.")
+    Container(api_app, "API Application", "Java/Node.js", "Chứa logic nghiệp vụ chính của hệ thống.")
+    ContainerDb(database, "Database", "PostgreSQL", "Lưu trữ dữ liệu về sách, người dùng, lịch sử mượn/trả.")
+}
+
+Rel(nguoi_doc, web_app, "Sử dụng", "HTTPS")
+Rel(nguoi_doc, mobile_app, "Sử dụng", "HTTPS")
+Rel(thu_thu, web_app, "Sử dụng", "HTTPS")
+
+Rel(web_app, api_app, "Gọi API", "JSON/HTTPS")
+Rel(mobile_app, api_app, "Gọi API", "JSON/HTTPS")
+
+Rel(api_app, database, "Đọc/ghi dữ liệu", "JDBC/TCP")
+Rel(api_app, payment_service, "Yêu cầu thanh toán", "JSON/HTTPS")
+
+@enduml
