@@ -1,0 +1,15 @@
+@startuml UC_Inventory
+left to right direction
+actor Admin as SysAdmin
+
+package "Inventory" {
+  usecase "Manage Inventories (CRUD)" as UC_InvCRUD
+  usecase "Manage Stock Levels" as UC_Stock
+  usecase "View Inventory Status" as UC_ViewInv
+}
+
+SysAdmin --> UC_InvCRUD
+SysAdmin --> UC_Stock
+SysAdmin --> UC_ViewInv
+UC_Stock .> UC_ViewInv : <<include>>
+@enduml

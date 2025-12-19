@@ -1,0 +1,24 @@
+@startuml UC_ShoppingCart
+left to right direction
+
+actor Customer as Buyer
+actor Admin as SysAdmin
+
+package "Shopping Cart" {
+  usecase "Add Item to Cart" as UC_Add
+  usecase "View Cart & Summary" as UC_ViewCart
+  usecase "Update Item Quantity" as UC_UpdateQty
+  usecase "Remove Item from Cart" as UC_Remove
+  usecase "Checkout Cart" as UC_Checkout
+}
+
+Buyer --> UC_Add
+Buyer --> UC_ViewCart
+Buyer --> UC_UpdateQty
+Buyer --> UC_Remove
+Buyer --> UC_Checkout
+
+SysAdmin --> UC_ViewCart : "view any customer's cart"
+SysAdmin --> UC_Checkout : "disable/enable cart"
+UC_Checkout .> UC_ViewCart : <<include>>
+@enduml

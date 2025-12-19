@@ -1,0 +1,26 @@
+@startuml UC_Reservation
+left to right direction
+actor Customer as Buyer
+actor Admin as SysAdmin
+actor Host as HostStaff
+
+package "Reservation" {
+  usecase "Make Reservation" as UC_Make
+  usecase "Modify Reservation" as UC_Modify
+  usecase "Cancel Reservation" as UC_Cancel
+  usecase "View My Reservations" as UC_ViewMine
+  usecase "Manage Tables" as UC_ManageTables
+  usecase "Confirm/Cancel Reservation" as UC_Confirm
+}
+
+Buyer --> UC_Make
+Buyer --> UC_Modify
+Buyer --> UC_Cancel
+Buyer --> UC_ViewMine
+
+HostStaff --> UC_Confirm
+SysAdmin --> UC_ManageTables
+
+UC_Make .> UC_ViewMine : <<include>>
+UC_Confirm .> UC_ViewMine : <<include>>
+@enduml
